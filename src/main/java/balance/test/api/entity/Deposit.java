@@ -1,5 +1,8 @@
 package balance.test.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "id", "balance" })
 public class Deposit {
 
     private int balance;
@@ -19,11 +22,10 @@ public class Deposit {
     
     
    public String toString() {
-        return "destination" +": + { " +
-                "id: " + id +
-                ", balance: " + balance +
-                // ", cliente=" + cliente +
-                '}';
+        return  "{\"description\": {\"id\":\""+id+"\", \"balance\":" + balance + "}" +"}";
+
+
+        // return  "id:"+id+", balance:" + balance + '}';
     }
 
     // public void deposit(int valor) {

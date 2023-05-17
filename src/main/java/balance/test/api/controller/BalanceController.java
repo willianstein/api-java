@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import balance.test.api.entity.Account;
 import balance.test.api.http.ResponseHandler;
@@ -35,51 +37,36 @@ public class BalanceController {
     }
 
     @GetMapping("/balance")
-    public ResponseEntity Account(@RequestParam Long account_id) {
+    public ResponseEntity Account(@RequestParam int account_id) {
 
         AccountService account = new AccountService();  
 
         var id = account.getAccount(account_id);  
 
         if (id == 0) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(account);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id);
         }
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/event")
-    @ResponseBody
     public ResponseEntity Event(@RequestBody Account account) {
 
         try {
             AccountService ccorrente = new AccountService();  
-            var o =   ccorrente.accountMovement(account); 
+             var res =   ccorrente.accountMovement(account); 
 
-            System.out.println();
-            
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-            //        account.getAccountId().toString(),
-            //        account.getBalance()
-            // );
+             System.out.println(res.toString());
+             
+                // public Map<String, String> getProperties() {
+                //     return properties;
+                // }
+                return ResponseEntity.status(HttpStatus.CREATED).body(""+res);
 
-            // return ResponseEntity.ok().body(new Account(
-            //     account.getAccountId(),
-            //     account.getBalance()
-            //    ));
-
-            // List<String> message = account.toString();
-        //   return  ResponseEntity.body(, HttpStatus.NOT_FOUND);
-                    
-
-         return ResponseEntity.status(HttpStatus.CREATED).body(o);
-
-
-
-
-            //  return ResponseHandler.generateResponse(HttpStatus.OK, o);
+            //  return ResponseHandler.generateResponseDeposit(HttpStatus.CREATED, res);
 
         } catch (Exception e) {
-            return ResponseHandler.generateResponse(HttpStatus.MULTI_STATUS, null);
+            return ResponseHandler.generateResponseDeposit(HttpStatus.MULTI_STATUS, null);
         }
     }
 }

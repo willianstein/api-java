@@ -5,16 +5,8 @@ import balance.test.api.entity.Deposit;
 
 public class DepositServices extends Deposit {
 
-    private int amount;
-    private int id;
-
-    public DepositServices(int id, int amount) {
-        this.id = id;
-        this.amount = amount;
-    }
-
     public DepositServices() {
-      
+        super();
     }
 
     // public void imprimirExtrato() {
@@ -26,9 +18,7 @@ public class DepositServices extends Deposit {
        return super.getAccountId(); 
     }
     
-    // public Deposit depositAccount() {
-        
-    //     Deposit deposit = new Deposit();
+    // public Deposit depositAccount(Deposit deposit) {
               
     //      deposit.deposit(amount);
 

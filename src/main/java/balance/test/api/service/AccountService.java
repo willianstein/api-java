@@ -17,14 +17,11 @@ public class AccountService extends Account{
         super.imprimirInfosComuns();
     }
 
-    public int getAccount(Long id) {
+    public int getAccount(int id) {
        return super.getAccountId(); 
     }
     
     public Deposit accountMovement(Account account) {
-
-        System.out.println(account.getDestination());
-        System.out.println(account.getAmount());
 
         try {
             if(types.DEPOSIT.toString().equals(account.getType())){

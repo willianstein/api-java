@@ -38,7 +38,7 @@ public class Account {
     }
 
    public String toString() {
-        return "destination" +": + { " +
+        return "destination" +":  { " +
                 "id: " + id +
                 ", balance: " + amount +
                 // ", cliente=" + cliente +
@@ -46,7 +46,7 @@ public class Account {
     }
 
     public String imprimirInfosComuns() {
-        return String.format("Número: %d%n", this.id, "Saldo: %.2f%n", this.amount);
+        return String.format("Número: %d%n", this.id);
     }
 
 
