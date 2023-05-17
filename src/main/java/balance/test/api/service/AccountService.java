@@ -1,6 +1,7 @@
 package balance.test.api.service;
 
 import balance.test.api.entity.Account;
+import balance.test.api.entity.Deposit;
 import balance.test.api.entity.Types;
 
 public class AccountService extends Account{
@@ -20,12 +21,21 @@ public class AccountService extends Account{
        return super.getAccountId(); 
     }
     
-    public Account accountMovement(Account account) {
+    public Deposit accountMovement(Account account) {
 
-         if(types.DEPOSIT.toString().equals(account.getType())){
-             System.out.println("aszxd");
-         }
-        return account;
-     
+        System.out.println(account.getDestination());
+        System.out.println(account.getAmount());
+
+        try {
+            if(types.DEPOSIT.toString().equals(account.getType())){
+                Deposit account2 = new Deposit(account.getDestination(), account.getAmount());
+                System.out.println(account2);
+                return account2;
+             }
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+
+        return null;
     }
 }
