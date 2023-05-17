@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import balance.test.api.account.AccountRepository;
-import balance.test.api.account.Account;
+import balance.test.api.account.Accoun2t;
+import balance.test.api.entity.Account;
+import balance.test.api.service.AccountService;
 
 @RestController
 @RequestMapping("")
@@ -26,28 +28,27 @@ public class BalanceController {
     @GetMapping("/balance")
     public ResponseEntity Account(@RequestParam Long account_id) {
 
-        AccountRepository ccorrente = new AccountRepository();  
+        AccountService account = new AccountService();  
 
-        var account = ccorrente.getAccount(account_id);  
+        var id = account.getAccount(account_id);  
 
-        if (account == 0) {
+        if (id == 0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(account);
         }
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/event")
-    public ResponseEntity Event(@RequestBody Account dados) {
+    public ResponseEntity Event(@RequestBody Account account) {
 
-        System.out.println(dados);
-        // AccountRepository ccorrente = new AccountRepository();  
+        AccountService ccorrente = new AccountService();  
 
-        // var account = ccorrente.getAccount(account_id);  
+        ccorrente.accountMovement(account); 
 
-        // if (account == 0) {
-        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(account);
-        // }
-        // return ResponseEntity.ok().build();
+         System.out.println(ccorrente);
+        
+        // return ResponseEntity.status(HttpStatus.OK).body(account);
+         return ResponseEntity.ok().build();
     }
 
 }
