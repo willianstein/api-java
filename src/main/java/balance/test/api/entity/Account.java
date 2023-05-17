@@ -17,7 +17,7 @@ public class Account {
     }
     
     public String getType() {
-        return type;
+        return type.toUpperCase();
     }
 
     public int getAccountId() {

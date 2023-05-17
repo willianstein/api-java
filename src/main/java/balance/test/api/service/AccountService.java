@@ -1,9 +1,12 @@
 package balance.test.api.service;
 
 import balance.test.api.entity.Account;
+import balance.test.api.entity.Types;
 
 public class AccountService extends Account{
     
+    private Types types;
+
     public AccountService() {
         super();
     }
@@ -19,9 +22,9 @@ public class AccountService extends Account{
     
     public Account accountMovement(Account account) {
 
-         if(account.getType() == "deposit"){
-
-         })
+         if(types.DEPOSIT.toString().equals(account.getType())){
+             System.out.println("aszxd");
+         }
         return account;
      
     }
