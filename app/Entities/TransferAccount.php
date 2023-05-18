@@ -8,7 +8,7 @@ use Psy\Util\Json;
 
 class TransferAccount extends AbstractHandler
 {
-    public function handle(object $request, object $account): ?object
+    public function handle(object $request, object $account)
     {
         if ($request->type != "tranfer")
            return parent::handle($request);

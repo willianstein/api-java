@@ -12,6 +12,7 @@ use App\Interfaces\HandlerInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class BankController extends Controller
 {
@@ -24,12 +25,16 @@ class BankController extends Controller
 
     public function reset()
     {
+        Cache::flush();
         return response("OK");
     }
 
     public function getAccount(Request $request)
     {
-        return response($this->account->getAccount($request->input("account_id")), 200);
+       if(!Cache::get('deposit')->id)
+        return response($this->account->getAccount($request->input("account_id")), 404);
+
+        return response(Cache::get('balance')->id, Response::HTTP_OK);
     }
 
     public function getEventAccount(Request $request)
@@ -39,26 +44,9 @@ class BankController extends Controller
         $withdraw = new WithdrawAccount();
 
         $deposit->setNext($tranfer)->setNext($withdraw);
+        $result =   $this->account->clientCode($deposit, $request);
 
-        $this->account->clientCode($deposit, $request);
-
-
-
-
-        // $result = $handler->handle($squirrel);
-
-        // dd($result);
-
-        // $this->account->getAccount($request->input("account_id")), 200);
-
-        // $monkey   = new DepositAccount($request->all());
-        // $squirrel = new TransferAccount($request->all());
-        // $dog      = new WithdrawAccount($request->all());
-
-        // $monkey->setNext($squirrel)->setNext($dog);
-
-    //    dd(getEventAccount($monkey));
-        // return response($this->accountRepository->getEventAccount($request->all()));
+        return response()->json($result, Response::HTTP_CREATED);
     }
 
 }

@@ -6,5 +6,5 @@ interface HandlerInterface
 {
     public function setNext(HandlerInterface $handler): HandlerInterface;
 
-    public function handle(object $request, object $account): ?object;
+    public function handle(object $request, object $account);
 }

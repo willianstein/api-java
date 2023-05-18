@@ -17,7 +17,7 @@ abstract class AbstractHandler implements HandlerInterface
         return $handler;
     }
 
-    public function handle(object $request, object $account): ?object
+    public function handle(object $request, object $account)
     {
         if ($this->nextHandler) {
             return $this->nextHandler->handle($request, $account);

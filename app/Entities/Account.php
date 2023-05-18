@@ -13,12 +13,13 @@ class Account
 
     public function __construct()
     {
-        $this->account = new stdClass;
-        $this->account->type = null;
+        $this->account              = new stdClass;
+        $this->account->type        = null;
         $this->account->destination = 0;
-        $this->account->amount = 0;
-        $this->account->origin = 0;
-        $this->account->id = 0;
+        $this->account->balance     = 0;
+        $this->account->amount      = 0;
+        $this->account->origin      = 0;
+        $this->account->id          = 0;
     }
 
     public function getAccount(int $id)

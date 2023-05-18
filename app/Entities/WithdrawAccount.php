@@ -9,7 +9,7 @@ use Psy\Util\Json;
 
 class WithdrawAccount extends AbstractHandler
 {
-    public function handle(object $request, object $account): ?object
+    public function handle(object $request, object $account)
     {
         if ($request->type != "withdraw")
             return parent::handle($request);
