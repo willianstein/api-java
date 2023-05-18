@@ -2,6 +2,8 @@ package balance.test.api.controller;
 
 import balance.test.api.commons.enums.Types;
 
+import java.util.Collections;
+
 import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +40,6 @@ public class BalanceController {
 
     @PostMapping("/event")
     public ResponseEntity<?> deposit(@RequestBody Account account) {
-        return ResponseHandler.generateResponse("destination", HttpStatus.OK, account);
-        // return ResponseEntity.status(HttpStatus.OK).body(account);
+         return ResponseEntity.status(HttpStatus.CREATED).body(account.toString());
     }
 }

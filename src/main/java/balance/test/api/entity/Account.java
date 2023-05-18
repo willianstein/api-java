@@ -12,7 +12,13 @@ import lombok.Setter;
 public class Account {
 
     private Integer id;
-    private String type;
+    private String  type;
     private Integer amount;
     private Integer destination;
+
+
+     public String toString() {
+        return  "{\"description\": {\"id\":\""+destination+"\", \"balance\":" + amount + "}" +"}";
+    }
+    
 }
