@@ -12,29 +12,31 @@ class DepositAccount extends AbstractHandler
     public function handle(object $request, object $account)
     {
         if ($request->type != "deposit")
-            return parent::handle($request);
+            return parent::handle($request, $account);
 
         $account->id      = $request->destination;
         $account->balance = $request->amount;
 
-        if(Cache::has('deposit')){
-            if($account->destination == Cache::get('deposit')->destination){
-                $account->balance = $request->amount + Cache::get('deposit')->balance;
-                $key = Cache::get('deposit');
+        if(Cache::has('account')){
+            if($account->destination == Cache::get('account')->destination){
+                $account->balance = $request->amount + Cache::get('account')->balance;
+                $key = Cache::get('account');
                 $key->balance = $account->balance ;
-                Cache::put('deposit', $key);
+                Cache::put('account', $key);
             }
         }else{
-            Cache::remember('deposit', 1440, function () use ($account) {
+            Cache::remember('account', 1440, function () use ($account) {
                 return $account;
             });
         }
 
-        return array(
+        $response =  array(
             "destination"=> array(
                "id"      => $account->id,
                "balance" => $account->balance
             )
         );
+
+        return response()->json( $response, Response::HTTP_CREATED);
     }
 }

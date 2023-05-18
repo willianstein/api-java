@@ -11,7 +11,7 @@ class TransferAccount extends AbstractHandler
     public function handle(object $request, object $account)
     {
         if ($request->type != "tranfer")
-           return parent::handle($request);
+           return parent::handle($request, $account);
 
         dd('tranfer');
     }
