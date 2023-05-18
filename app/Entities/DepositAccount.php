@@ -38,7 +38,7 @@ class DepositAccount extends AbstractHandler
             )
         );
 
-        Log::channel('bankTransition')->info(json_encode($response));
+        Log::channel('bankTransition')->info([json_encode(["input" => $request->all()]), json_encode(["response" => $response])]);
 
         return response()->json( $response, Response::HTTP_CREATED);
     }

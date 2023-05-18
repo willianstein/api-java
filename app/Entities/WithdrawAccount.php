@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use PhpParser\Node\Stmt\Return_;
 use stdClass;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class WithdrawAccount extends AbstractHandler
 {
@@ -29,11 +30,11 @@ class WithdrawAccount extends AbstractHandler
                    "balance" => $cache->balance
                 )
             );
-            \Log::channel('bankTransition')->info(json_encode($response));
+            Log::channel('bankTransition')->info([json_encode(["input" => $request->all()]), json_encode(["response" => $response])]);
             return response()->json( $response, Response::HTTP_CREATED);
         }
 
-        \Log::channel('bankTransition')->info(json_encode($request));
+        Log::channel('bankTransition')->info([json_encode(["input" => $request->all()]), json_encode(["response" => null])]);
         return response()->json(0, Response::HTTP_NOT_FOUND);
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class BankController extends Controller
 {
@@ -31,9 +32,12 @@ class BankController extends Controller
 
     public function getAccount(Request $request)
     {
-        if (!Cache::has('account'))
+        if (!Cache::has('account')){
+            Log::channel('bankTransition')->info([json_encode(["input" => $request->all()]), json_encode(["response" => null])]);
             return response()->json(0, Response::HTTP_NOT_FOUND);
+        }
 
+        Log::channel('bankTransition')->info([json_encode(["input" => $request->all()]), json_encode(["response" => Cache::get('account')])]);
         return response(Cache::get('account')->balance, Response::HTTP_OK);
     }
 
