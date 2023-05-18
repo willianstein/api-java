@@ -31,8 +31,8 @@ class BankController extends Controller
 
     public function getAccount(Request $request)
     {
-       if(!Cache::has('account'))
-          return response($this->account->getAccount($request->input("account_id")), 404);
+        if (!Cache::has('account'))
+            return response()->json(0, Response::HTTP_NOT_FOUND);
 
         return response(Cache::get('account')->balance, Response::HTTP_OK);
     }
@@ -44,12 +44,6 @@ class BankController extends Controller
         $withdraw = new WithdrawAccount();
 
         $deposit->setNext($tranfer)->setNext($withdraw);
-        $result =   $this->account->clientCode($deposit, $request);
-
-        return $result;
-        dd($result);
-
-        return response()->json($result, Response::HTTP_CREATED);
+        return $this->account->clientCode($deposit, $request);
     }
-
 }

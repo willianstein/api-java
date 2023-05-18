@@ -29,9 +29,11 @@ class WithdrawAccount extends AbstractHandler
                    "balance" => $cache->balance
                 )
             );
+            \Log::channel('bankTransition')->info(json_encode($response));
             return response()->json( $response, Response::HTTP_CREATED);
         }
 
+        \Log::channel('bankTransition')->info(json_encode($request));
         return response()->json(0, Response::HTTP_NOT_FOUND);
     }
 }

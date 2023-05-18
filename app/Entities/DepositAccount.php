@@ -6,6 +6,7 @@ use App\Interfaces\AccountInterface;
 use App\Models\Account\AbstractHandler;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class DepositAccount extends AbstractHandler
 {
@@ -18,7 +19,7 @@ class DepositAccount extends AbstractHandler
         $account->balance = $request->amount;
 
         if(Cache::has('account')){
-            if($account->destination == Cache::get('account')->destination){
+            if($account->id == Cache::get('account')->id){
                 $account->balance = $request->amount + Cache::get('account')->balance;
                 $key = Cache::get('account');
                 $key->balance = $account->balance ;
@@ -36,6 +37,8 @@ class DepositAccount extends AbstractHandler
                "balance" => $account->balance
             )
         );
+
+        Log::channel('bankTransition')->info(json_encode($response));
 
         return response()->json( $response, Response::HTTP_CREATED);
     }
