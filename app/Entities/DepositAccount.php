@@ -20,6 +20,9 @@ class DepositAccount extends AbstractHandler
         if(Cache::has('deposit')){
             if($account->destination == Cache::get('deposit')->destination){
                 $account->balance = $request->amount + Cache::get('deposit')->balance;
+                $key = Cache::get('deposit');
+                $key->balance = $account->balance ;
+                Cache::put('deposit', $key);
             }
         }else{
             Cache::remember('deposit', 1440, function () use ($account) {

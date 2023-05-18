@@ -31,10 +31,10 @@ class BankController extends Controller
 
     public function getAccount(Request $request)
     {
-       if(!Cache::get('deposit')->id)
-        return response($this->account->getAccount($request->input("account_id")), 404);
+       if(!Cache::has('deposit'))
+          return response($this->account->getAccount($request->input("account_id")), 404);
 
-        return response(Cache::get('balance')->id, Response::HTTP_OK);
+        return response(Cache::get('deposit')->balance, Response::HTTP_OK);
     }
 
     public function getEventAccount(Request $request)
